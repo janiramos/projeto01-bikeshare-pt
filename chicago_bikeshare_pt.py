@@ -139,16 +139,16 @@ assert most_popular_gender(data_list) == "Masculino", "TAREFA 6: Resultado de re
 # -----------------------------------------------------
 
 # Se tudo está rodando como esperado, verifique este gráfico!
-# gender_list = column_to_list(data_list, -2)
-# types = ["Male", "Female"]
-# quantity = count_gender(data_list)
-# y_pos = list(range(len(types)))
-# plt.bar(y_pos, quantity)
-# plt.ylabel('Quantidade')
-# plt.xlabel('Gênero')
-# plt.xticks(y_pos, types)
-# plt.title('Quantidade por Gênero')
-# plt.show(block=True)
+gender_list = column_to_list(data_list, -2)
+types = ["Male", "Female"]
+quantity = count_gender(data_list)
+y_pos = list(range(len(types)))
+plt.bar(y_pos, quantity)
+plt.ylabel('Quantidade')
+plt.xlabel('Gênero')
+plt.xticks(y_pos, types)
+plt.title('Quantidade por Gênero')
+plt.show(block=True)
 
 input("Aperte Enter para continuar...")
 # TAREFA 7
@@ -156,36 +156,36 @@ input("Aperte Enter para continuar...")
 
 #função para contar os tipos de usuários.
 def count_user(data_list):
+    """
+     Função retornara quantidade de usuarios.
+     Retorna:
+         uma liasta dos tipos de usuários.
+     """    
     customer = 0
     subscriber = 0
+    dependent = 0
+
+    #loop para acumular o tipos de usuários
     for i in data_list:
         if i[-3]=='Customer':
             customer +=1
         elif i[-3]=='Subscriber':
             subscriber +=1
-    return [customer, subscriber]
-
-def most_popular_user(data_list):
-    answer = "Igual"
-    if (count_user(data_list)[0] > count_user(data_list)[1] ):
-        answer = "Customer"
-    else:
-        answer = "Subscriber"
-    return answer
-
+        elif i[-3] == 'Dependent':
+            dependent +=1
+    return [customer, subscriber, dependent]
 
 print("\nTAREFA 7: Verifique o gráfico!")
-
-# user_types_list = column_to_list(data_list, -3)
-# types = ["Customer", "Subscriber"]
-# quantity = count_user(data_list)
-# y_pos = list(range(len(types)))
-# plt.bar(y_pos, quantity)
-# plt.ylabel('Quantidade')
-# plt.xlabel('User')
-# plt.xticks(y_pos, types)
-# plt.title('Quantidade por User')
-# plt.show(block=True)
+user_types_list = column_to_list(data_list, -3)
+types = ["Customer", "Subscriber","Dependent"]
+quantity = count_user(data_list)
+y_pos = list(range(len(types)))
+plt.bar(y_pos, quantity)
+plt.ylabel('Quantidade')
+plt.xlabel('User')
+plt.xticks(y_pos, types)
+plt.title('Quantidade por User')
+plt.show(block=True)
 
 
 input("Aperte Enter para continuar...")
@@ -212,30 +212,47 @@ trip_duration_list = column_to_list(data_list, 2)
 #muda a trip_duration_list de string para inteiro
 trip_duration_list = list(map(int, trip_duration_list))
 
-#inicializa as variaveis maximo e minimo
-max_trip = 0.
 
 def get_min_trip():
+    """
+     Função encontrar o menor valor da lista trip_duration_list.
+     Retorna:
+         o menor valor.
+     """
     min_trip = int(trip_duration_list[0]) #recebe o dados na posição 0
-    #faz o filtro comparando o menor valor
+
+    #faz o filtro comparando o menor valor da variavel min_trip como a lista
     for item in filter(lambda x: x<=min_trip,trip_duration_list):
         min_trip = item
     return min_trip
 
+
 def get_max_trip():
     """
-     Função retornar o maior valor.
+     Função encontrar o maior valor.
      Retorna:
-         o calculo como resultado do maior valor.
-
+         o maior valor.
      """
     max_trip = int(trip_duration_list[0]) #recebe o dados na posição 0
     #faz o filtro comparando o menor valor
     for item in filter(lambda x: x>=max_trip,trip_duration_list):
         max_trip = item
     return max_trip
+
+
 def get_mean_trip():
-    return sum(int(x) for x in trip_duration_list) / len(trip_duration_list)
+    """
+        Função encontrar o valor médio da lista.
+        Retorna:
+            o valor medio.
+    """
+    #encontra o tamanho da lista
+    tamanho_lista = len(trip_duration_list)
+    #loop da lista tornando valores inteiros
+    lista_inteiros = (int(x) for x in trip_duration_list)
+    #soma e divide
+    resultado_medio = sum(lista_inteiros) / tamanho_lista
+    return resultado_medio
 
 def get_median():
     """
@@ -337,8 +354,8 @@ def count_subtems(types,counts):
     """
      Função contar os subitens.
      Argumentos:
-         param1: recebe uma lista dos typos de dados.
-         param2: recebe uma lista geral dos typos informados.
+         param1: recebe uma lista de tipos de dados.
+         param2: recebe uma lista geral dos tipos informados.
      Retorna:
          retorna 1 valor: lista do com o total de lista infromado
     """    
@@ -357,3 +374,13 @@ if answer == "yes":
     assert len(types) == 3, "TAREFA 11: Há 3 tipos de gênero!"
     assert sum(counts) == 1551505, "TAREFA 11: Resultado de retorno incorreto!"
     # -----------------------------------------------------
+
+    #------------- Aqui esta validando a função para as colunas tipos de usuários------------
+    [1234339, 4, 317162]
+    column_list = column_to_list(data_list, -3)
+    type_user, count_user = count_items(column_list)
+    print("\nTAREFA 11: Validando as função count_items(), passando como parametro o tipo de usuário")
+    print("Tipos de usuario:", type_user, "Counts:", count_user)
+    assert len(type_user) == 3, "TAREFA 11: Há 3 tipos usuarios!"
+    assert sum(count_user) == 1551505, "TAREFA 11: Resultado de retorno incorreto!"
+
