@@ -52,16 +52,28 @@ input("Aperte Enter para continuar...")
 # TODO: Crie uma função para adicionar as colunas(features) de uma lista em outra lista, na mesma ordem
 
 def column_to_list(data, index):
-    column_list = []
+    """
+     Função de exemplo com anotações.
+     Argumentos:
+         param1: recebe a lista da coluna especifica.
+         param2: passa como paramentro a coluna exibida as imformações.
+     Retorna:
+         a lista dos da coluna especifica
+         neste casa será exibido as 20 primeiras amostras dos generos .
+     """   
+    column_list = [] #inicializa o lista para receber a lista solicitada
+    #loop vai iniciar apartir 
     for i in data[1:]:
-        column_list.append(i[index])
+        column_list.append(i[index]) #acumula na nova lista
     # Dica: Você pode usar um for para iterar sobre as amostras, pegar a feature pelo seu índice, e dar append para uma lista
     return column_list
 
+#informa o tamanho dos arquivos da lista
 print(len(column_to_list(data_list, -2)))
 
 # Vamos checar com os gêneros se isso está funcionando (apenas para os primeiros 20)
 print("\nTAREFA 3: Imprimindo a lista de gêneros das primeiras 20 amostras")
+
 print(column_to_list(data_list, -2)[1:20])
 
 # ------------ NÃO MUDE NENHUM CÓDIGO AQUI ------------
@@ -96,10 +108,19 @@ input("Aperte Enter para continuar...")
 # TODO: Crie uma função para contar os gêneros. Retorne uma lista.
 # Isso deveria retornar uma lista com [count_male, count_female] (exemplo: [10, 15] significa 10 Masculinos, 15 Femininos)
 def count_gender(data_list):
-    
-    male = 0
-    female = 0
+    """
+     Função para retornar o número de generos existente na lista: masculino e femininos.
+     Argumento:
+         param1: recebe a lista geral
+     Retorna:
+         Uma nova lista com dois valores inteiros.
+         A quantidade de masculino e feminino.
+     """  
+    male = 0 #inicializa a variavel do tipo masculino
+    female = 0 #inicializa a variavel do tipo feminino
+    #faz o loop do data list
     for i in data_list:
+        #quando o i encontrar a coluna 6 que pertence o genero, sera comparado com os tipos masculino ou feminino
         if i[6]=='Male':
             male +=1
         elif i[6]=='Female':
@@ -121,9 +142,18 @@ input("Aperte Enter para continuar...")
 # TAREFA 6
 # TODO: Crie uma função que pegue o gênero mais popular, e retorne este gênero como uma string.
 # Esperamos ver "Masculino", "Feminino", ou "Igual" como resposta.
-def most_popular_gender(data_list):
+def most_popular_gender(data):
+    """
+     Função para descobrir qual o genero mais popular.
+     Argumento:
+         param1: recebe a lista
+     Retorna:
+         a respostra informando qual é o genero mais popular.
+     """  
+     #ja inicializa a variavel com igual
     answer = "Igual"
-    if (count_gender(data_list)[0] > count_gender(data_list)[1] ):
+    #verifica se na lista informada na posição 0, o masculino, e maior que na 1, o feminino
+    if (count_gender(data)[0] > count_gender(data)[1] ):
         answer = "Masculino"
     else:
         answer = "Feminino"
@@ -192,9 +222,13 @@ input("Aperte Enter para continuar...")
 # TAREFA 8
 # TODO: Responda a seguinte questão
 male, female = count_gender(data_list)
+print(male+female)
+print(len(data_list))
+
 print("\nTAREFA 8: Por que a condição a seguir é Falsa?")
 print("male + female == len(data_list):", (male + female) == len(data_list))
-answer = input("Escreva sua resposta aqui.")
+input("Aperte enter para visualizar a resposta")
+answer = "A condição é falsa pois a função count_gender(data_list) esta só contando os generos masculino e femininos. existe também a amostra dos vazio."
 print("resposta:", answer)
 
 # ------------ NÃO MUDE NENHUM CÓDIGO AQUI ------------
@@ -213,48 +247,49 @@ trip_duration_list = column_to_list(data_list, 2)
 trip_duration_list = list(map(int, trip_duration_list))
 
 
-def get_min_trip():
+def get_min_trip(data):
     """
      Função encontrar o menor valor da lista trip_duration_list.
      Retorna:
          o menor valor.
      """
-    min_trip = int(trip_duration_list[0]) #recebe o dados na posição 0
-
-    #faz o filtro comparando o menor valor da variavel min_trip como a lista
-    for item in filter(lambda x: x<=min_trip,trip_duration_list):
-        min_trip = item
+    min_trip = int(data[0])
+    for min_list in data:
+        if int(min_list) < min_trip:
+            min_trip = int(min_list)
     return min_trip
 
-
-def get_max_trip():
+def get_max_trip(data):
     """
      Função encontrar o maior valor.
      Retorna:
          o maior valor.
      """
-    max_trip = int(trip_duration_list[0]) #recebe o dados na posição 0
-    #faz o filtro comparando o menor valor
-    for item in filter(lambda x: x>=max_trip,trip_duration_list):
-        max_trip = item
+    max_trip = int(data[0]) #recebe o dados na posição 0
+   
+    for max_list in data:           
+        if int(max_list) > max_trip :
+            max_trip=max_list
     return max_trip
 
 
-def get_mean_trip():
+def get_mean_trip(data):
     """
         Função encontrar o valor médio da lista.
         Retorna:
             o valor medio.
     """
     #encontra o tamanho da lista
-    tamanho_lista = len(trip_duration_list)
-    #loop da lista tornando valores inteiros
-    lista_inteiros = (int(x) for x in trip_duration_list)
+    tamanho_lista = len(data)
+    #inicializa a soma dos inteiros
+    sum_inteiros = 0
+    for num in data:
+        sum_inteiros = sum_inteiros + int(num)
     #soma e divide
-    resultado_medio = sum(lista_inteiros) / tamanho_lista
+    resultado_medio = sum_inteiros / tamanho_lista
     return resultado_medio
 
-def get_median():
+def get_median(data):
     """
      Função encontrar a mediana dos valores.
      Argumentos:
@@ -263,20 +298,19 @@ def get_median():
 
      """
     #ordena a lista
-    sortlist = sorted(trip_duration_list)
+    sortlist = sorted(data)
     #recebe o tamanho da lista
-    len_numbers = len(trip_duration_list)
+    len_numbers = len(data)
 
     index = (len_numbers - 1) // 2
     if (len_numbers % 2):
         return sortlist[index] #elemento central
     else:
         return (sortlist[index] + sortlist[index + 1])/2.0 #elemento de duas listas
-
-min_trip  =get_min_trip()
-max_trip  =get_max_trip()
-mean_trip =get_mean_trip()
-median_trip = get_median()
+min_trip  =get_min_trip(trip_duration_list)
+max_trip  =get_max_trip(trip_duration_list)
+mean_trip =get_mean_trip(trip_duration_list)
+median_trip = get_median(trip_duration_list)
 
 print("\nTAREFA 9: Imprimindo o mínimo, máximo, média, e mediana")
 print("Min: ", min_trip, "Max: ", max_trip, "Média: ", mean_trip, "Mediana: ", median_trip)
@@ -376,7 +410,6 @@ if answer == "yes":
     # -----------------------------------------------------
 
     #------------- Aqui esta validando a função para as colunas tipos de usuários------------
-    [1234339, 4, 317162]
     column_list = column_to_list(data_list, -3)
     type_user, count_user = count_items(column_list)
     print("\nTAREFA 11: Validando as função count_items(), passando como parametro o tipo de usuário")
@@ -384,3 +417,15 @@ if answer == "yes":
     assert len(type_user) == 3, "TAREFA 11: Há 3 tipos usuarios!"
     assert sum(count_user) == 1551505, "TAREFA 11: Resultado de retorno incorreto!"
 
+
+#fontes
+#contador no loop
+    #http://book.pythontips.com/en/latest/map_filter.html
+#pesquisa dos filter
+    #https://pythonhelp.wordpress.com/2012/05/13/map-reduce-filter-e-lambda/
+#baseado neste site para montar a mediana
+    #https://groups.google.com/forum/#!topic/python-brasil/XNE6ok4eUNQ
+    #https://pt.stackoverflow.com/questions/223676/retornando-%C3%ADndices-de-listas-python
+
+#baseado neste site para criar a lista dos count_items
+    #https://www.python-course.eu/lambda.php
