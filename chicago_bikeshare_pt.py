@@ -284,7 +284,7 @@ def get_mean_trip(data):
     #inicializa a soma dos inteiros
     sum_inteiros = 0
     for num in data:
-        sum_inteiros = sum_inteiros + int(num)
+        sum_inteiros += int(num)
     #soma e divide
     resultado_medio = sum_inteiros / tamanho_lista
     return resultado_medio
